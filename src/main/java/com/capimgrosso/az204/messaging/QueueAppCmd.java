@@ -4,6 +4,7 @@ import com.azure.core.http.rest.PagedIterable;
 import com.azure.identity.DefaultAzureCredentialBuilder;
 import com.azure.storage.queue.QueueClientBuilder;
 import com.azure.storage.queue.models.QueueMessageItem;
+import com.azure.storage.queue.models.QueueProperties;
 
 import java.util.logging.Logger;
 
@@ -22,6 +23,10 @@ public class QueueAppCmd {
 
         queueClient.sendMessage("hello queue's");
         queueClient.sendMessage("I was here");
+
+        LOG.info("--- message length ---");
+        QueueProperties properties = queueClient.getProperties();
+        LOG.info(""+properties.getApproximateMessagesCount());
 
         PagedIterable<QueueMessageItem> messages =  queueClient.receiveMessages(10);
         LOG.info("Receiving messages");
